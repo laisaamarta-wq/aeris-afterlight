@@ -1,0 +1,22 @@
+# One-time update: lookbook still with a pair of sneakers (public/img/203*.webp).
+name: Update lookbook photo
+on:
+  push:
+    paths: ['.github/workflows/update-lookbook-photo.yml']
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -fsSL --retry 3 https://d2ol7oe51mr4n9.cloudfront.net/user_3C15E03naKYn0k12cqxNShlIybX/2b0ba335-c257-4e95-a39f-488bd353542b.gz -o /tmp/u.tgz
+          echo "d91b210b043aee3d4a5c372c6e5fbfccc64a25d479333e1a392d24d8cdd49294  /tmp/u.tgz" | sha256sum -c -
+          mkdir /tmp/u && tar -xzf /tmp/u.tgz -C /tmp/u && (cd /tmp/u && sha256sum -c MANIFEST.sha256)
+          cp /tmp/u/public/img/203.webp /tmp/u/public/img/203-sm.webp public/img/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/img/203.webp public/img/203-sm.webp
+          git commit -m "Lookbook still: pair of Terrain Runners instead of a single shoe"
+          git push
