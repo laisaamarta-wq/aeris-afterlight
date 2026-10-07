@@ -1,0 +1,22 @@
+# One-time import of the AERIS site (pages, images, 3D models, Vercel config).
+name: Import site
+on:
+  push:
+    paths: ['.github/workflows/import-site.yml']
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -fsSL --retry 3 https://d2ol7oe51mr4n9.cloudfront.net/user_3C15E03naKYn0k12cqxNShlIybX/a93454bf-d1a6-4093-b96e-bb53db9e97e7.gz -o /tmp/s.tgz
+          echo "39080d8e6c7a7984b6a0d8f594015b55996ebe7176edf63f889c01b1ff253523  /tmp/s.tgz" | sha256sum -c -
+          mkdir /tmp/x && tar -xzf /tmp/s.tgz -C /tmp/x && cd /tmp/x/aeris && sha256sum -c --quiet MANIFEST.sha256 && rm MANIFEST.sha256
+          cp -a /tmp/x/aeris/. "$GITHUB_WORKSPACE"/ && cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public vercel.json README.md .gitignore
+          git commit -m "Add AERIS Afterlight site: pages, images, 3D models and Vercel config"
+          git push
