@@ -29,7 +29,7 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:auto;overflow-x:clip}
 body{margin:0;background:var(--haze);color:var(--ink);font:400 15px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:clip}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 button,input,select,textarea{font:inherit;color:inherit}
 button{background:none;border:0;padding:0;cursor:pointer}
@@ -411,6 +411,7 @@ body.nav-hidden .toolbar{top:calc(env(safe-area-inset-top,0px) + 12px)}
 .pdp-stage{position:relative;border-radius:var(--r-xl);overflow:hidden;aspect-ratio:4/4.4;background:var(--bg,var(--haze-2))}
 .pdp-stage.env{background:radial-gradient(70% 60% at 70% 30%,rgba(242,205,180,.6),transparent 70%),radial-gradient(60% 50% at 20% 90%,rgba(163,173,194,.45),transparent 70%),linear-gradient(180deg,#e2dbd2,#d6cec4)}
 .pdp-stage>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;cursor:zoom-in}
+.pdp-stage [data-stage-in]>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;cursor:zoom-in}
 .pdp-stage.env>img.cut{object-fit:contain;padding:4% 8%;filter:drop-shadow(0 34px 30px rgba(40,30,25,.24));animation:floaty 8s ease-in-out infinite}
 .pdp-stage .orb{position:absolute;inset:6% 14%;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.6),rgba(255,255,255,.06) 42%,rgba(255,255,255,0) 64%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),inset -30px -40px 80px rgba(163,173,194,.22);pointer-events:none}
 .pdp-stage .bubble{position:absolute;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.8),rgba(255,255,255,.1) 40%,rgba(255,255,255,0) 62%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);pointer-events:none;animation:drift 18s ease-in-out infinite alternate}
