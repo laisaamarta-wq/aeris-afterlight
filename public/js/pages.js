@@ -44,6 +44,8 @@ function mountRail(root) {
   el.addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); update();
   // mouse drag (touch scrolls natively)
   let drag = null;
+  // stop the browser's native link/image drag so a mouse drag always scrolls the rail
+  el.addEventListener('dragstart', (e) => e.preventDefault());
   el.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; drag = { x: e.clientX, s: el.scrollLeft, moved: false }; });
   addEventListener('pointermove', (e) => { if (!drag) return; const dx = e.clientX - drag.x; if (Math.abs(dx) > 4) { drag.moved = true; el.classList.add('dragging'); } el.scrollLeft = drag.s - dx; });
   const end = () => { if (!drag) return; const moved = drag.moved; drag = null; el.classList.remove('dragging'); if (moved) { const stop = (ev) => { ev.preventDefault(); ev.stopPropagation(); }; el.addEventListener('click', stop, { capture: true, once: true }); setTimeout(() => el.removeEventListener('click', stop, { capture: true }), 50); } };
